@@ -1,7 +1,7 @@
-import numpy as np
 import sympy as sp
 import math
 import os
+from elements import chemparse
 
 os.system('cls' if os.name == 'nt' else 'clear')
 print("------------------------------")
@@ -10,28 +10,6 @@ print("------------By:JLo------------")
 print("------------------------------")
 print("-----Comp.Chem-Problem-#2-----")
 print("------------------------------")
-
-def chemparse(compound):
-    length = len(compound)
-    i = 0
-    element_num = {}
-    while i < length:
-        subtemp = ""
-        eltemp = ""
-        if compound[i].isupper():
-            eltemp = compound[i]
-            i += 1
-        while i < length and compound[i].islower():
-            eltemp += compound[i]
-            i += 1
-        while i < length and compound[i].isdigit():
-            subtemp += compound[i]
-            i += 1
-        sub = int(subtemp) if subtemp else 1
-        if eltemp in element_num:
-            element_num[eltemp] += sub
-        else: element_num[eltemp]=sub
-    return element_num
 
 x = input("Enter the reaction you wish to be balanced:")
 equation = x.split(">")
@@ -46,9 +24,9 @@ for thing in allreact + allprod:
 masterlist = list(masterlist)
 matrix = sp.zeros(len(masterlist),len(react)+len(prod))
 for i, element in enumerate(masterlist):
-    for j, dict in enumerate(allreact):
-        if element in dict:
-            matrix[i,j]=dict[element]
+    for j, thing in enumerate(allreact):
+        if element in thing:
+            matrix[i,j]=thing[element]
     for j, dict2 in enumerate(allprod):
         if element in dict2:
             matrix[i, j+len(allreact)] = -dict2[element]

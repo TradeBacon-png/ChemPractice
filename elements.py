@@ -18,3 +18,24 @@ atomweight = {"H": 1.008, "He": 4.0026, "Li": 6.94, "Be": 9.0122, "B": 10.81, "C
     "Lr": 262, "Rf": 267, "Db": 268, "Sg": 269, "Bh": 270, "Hs": 269,
     "Mt": 278, "Ds": 281, "Rg": 282, "Cn": 285, "Nh": 286, "Fl": 289,
     "Mc": 289, "Lv": 293, "Ts": 294, "Og": 294}
+def chemparse(compound):
+    length = len(compound)
+    i = 0
+    element_num = {}
+    while i < length:
+        subtemp = ""
+        eltemp = ""
+        if compound[i].isupper():
+            eltemp = compound[i]
+            i += 1
+        while i < length and compound[i].islower():
+            eltemp += compound[i]
+            i += 1
+        while i < length and compound[i].isdigit():
+            subtemp += compound[i]
+            i += 1
+        sub = int(subtemp) if subtemp else 1
+        if eltemp in element_num:
+            element_num[eltemp] += sub
+        else: element_num[eltemp]=sub
+    return element_num
